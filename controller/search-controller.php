@@ -5,7 +5,7 @@ require_once(dirname(__FILE__) . "/../lib/class.ajaxResponse.php");
 $action = !empty($_GET['action']) ? $_GET['action'] : null;
 $query = !empty($_GET['q']) ? $_GET['q'] : null;
 $order = !empty($_GET['order']) ? $_GET['order'] : null;
-$limit = 50;
+$limit = !empty($_GET['limit']) ? $_GET['limit'] : 50;
 
 $response = new AjaxResponse();
 if (empty($query)) {
@@ -56,7 +56,7 @@ function getSolrResult($query, $order, $limit)
     $response = new AjaxResponse();
     $query = str_replace(' ', '', $query);
     try {
-        $solr_query = "q=name_searchable:*" . urlencode($query) . "*&rows=50&wt=json";
+        $solr_query = "q=name_searchable:*" . urlencode($query) . "*";
         if (!empty($order)) {
             $order = "name_sortable asc";
             $solr_query .= "&sort=" . urlencode($order);
